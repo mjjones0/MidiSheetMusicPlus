@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0B5CBA19-8987-4EBE-8D7F-4683FCAA5A2F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MidiSheetMusic</RootNamespace>
+    <AssemblyName>MidiSheetMusic</AssemblyName>
+    <StartupObject>MidiSheetMusic.MidiSheetMusic</StartupObject>
+    <ApplicationIcon>NotePair.ico</ApplicationIcon>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccidSymbol.cs" />
+    <Compile Include="Adler.cs" />
+    <Compile Include="BarSymbol.cs" />
+    <Compile Include="BlankSymbol.cs" />
+    <Compile Include="ChordSymbol.cs" />
+    <Compile Include="ClefMeasures.cs" />
+    <Compile Include="ClefSymbol.cs" />
+    <Compile Include="ConfigINI.cs" />
+    <Compile Include="InstrumentDialog.cs" />
+    <Compile Include="KeySignature.cs" />
+    <Compile Include="LyricSymbol.cs" />
+    <Compile Include="MidiEvent.cs" />
+    <Compile Include="MidiFile.cs" />
+    <Compile Include="MidiFileException.cs" />
+    <Compile Include="MidiFileReader.cs" />
+    <Compile Include="MidiNote.cs" />
+    <Compile Include="MidiOptions.cs" />
+    <Compile Include="MidiPlayer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MidiTrack.cs" />
+    <Compile Include="MidiSheetMusic.cs" />
+    <Compile Include="MusicSymbol.cs" />
+    <Compile Include="NoteColorDialog.cs" />
+    <Compile Include="Piano.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PlayMeasuresDialog.cs" />
+    <Compile Include="PDFWithImages.cs" />
+    <Compile Include="RestSymbol.cs" />
+    <Compile Include="SampleSongDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SheetMusic.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SheetMusicWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Staff.cs" />
+    <Compile Include="Stem.cs" />
+    <Compile Include="SymbolWidths.cs" />
+    <Compile Include="TimeSignature.cs" />
+    <Compile Include="TimeSigSymbol.cs" />
+    <Compile Include="Volume.cs" />
+    <Compile Include="WhiteNote.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="NotePair.ico" />
+    <EmbeddedResource Include="NotePair.png" />
+    <EmbeddedResource Include="SmallNotePair.png" />
+    <EmbeddedResource Include="bass.png" />
+    <EmbeddedResource Include="eight.png" />
+    <EmbeddedResource Include="fastforward.png" />
+    <EmbeddedResource Include="four.png" />
+    <EmbeddedResource Include="nine.png" />
+    <EmbeddedResource Include="pause.png" />
+    <EmbeddedResource Include="play.png" />
+    <EmbeddedResource Include="rewind.png" />
+    <EmbeddedResource Include="six.png" />
+    <EmbeddedResource Include="stop.png" />
+    <EmbeddedResource Include="three.png" />
+    <EmbeddedResource Include="treble.png" />
+    <EmbeddedResource Include="twelve.png" />
+    <EmbeddedResource Include="two.png" />
+    <EmbeddedResource Include="volume.png" />
+    <EmbeddedResource Include="help.rtf" />
+    <EmbeddedResource Include="songs/Bach__Invention_No._13.mid" />
+    <EmbeddedResource Include="songs/Bach__Minuet_in_G_major.mid" />
+    <EmbeddedResource Include="songs/Bach__Musette_in_D_major.mid" />
+    <EmbeddedResource Include="songs/Bach__Prelude_in_C_major.mid" />
+    <EmbeddedResource Include="songs/Beethoven__Fur_Elise.mid" />
+    <EmbeddedResource Include="songs/Beethoven__Minuet_in_G_major.mid" />
+    <EmbeddedResource Include="songs/Beethoven__Moonlight_Sonata.mid" />
+    <EmbeddedResource Include="songs/Beethoven__Sonata_Pathetique_2nd_Mov.mid" />
+    <EmbeddedResource Include="songs/Bizet__Habanera_from_Carmen.mid" />
+    <EmbeddedResource Include="songs/Borodin__Polovstian_Dance.mid" />
+    <EmbeddedResource Include="songs/Brahms__Hungarian_Dance_No._5.mid" />
+    <EmbeddedResource Include="songs/Brahms__Waltz_No._15_in_A-flat_major.mid" />
+    <EmbeddedResource Include="songs/Brahms__Waltz_No._9_in_D_minor.mid" />
+    <EmbeddedResource Include="songs/Chopin__Minute_Waltz_Op._64_No._1_in_D-flat_major.mid" />
+    <EmbeddedResource Include="songs/Chopin__Nocturne_Op._9_No._1_in_B-flat_minor.mid" />
+    <EmbeddedResource Include="songs/Chopin__Nocturne_Op._9_No._2_in_E-flat_major.mid" />
+    <EmbeddedResource Include="songs/Chopin__Nocturne_in_C_minor.mid" />
+    <EmbeddedResource Include="songs/Chopin__Prelude_Op._28_No._20_in_C_minor.mid" />
+    <EmbeddedResource Include="songs/Chopin__Prelude_Op._28_No._4_in_E_minor.mid" />
+    <EmbeddedResource Include="songs/Chopin__Prelude_Op._28_No._6_in_B_minor.mid" />
+    <EmbeddedResource Include="songs/Chopin__Prelude_Op._28_No._7_in_A_major.mid" />
+    <EmbeddedResource Include="songs/Chopin__Waltz_Op._64_No._2_in_Csharp_minor.mid" />
+    <EmbeddedResource Include="songs/Clementi__Sonatina_Op._36_No._1.mid" />
+    <EmbeddedResource Include="songs/Easy_Songs__Brahms_Lullaby.mid" />
+    <EmbeddedResource Include="songs/Easy_Songs__Greensleeves.mid" />
+    <EmbeddedResource Include="songs/Easy_Songs__Jingle_Bells.mid" />
+    <EmbeddedResource Include="songs/Easy_Songs__Silent_Night.mid" />
+    <EmbeddedResource Include="songs/Easy_Songs__Twinkle_Twinkle_Little_Star.mid" />
+    <EmbeddedResource Include="songs/Field__Nocturne_in_B-flat_major.mid" />
+    <EmbeddedResource Include="songs/Grieg__Canon_Op._38_No._8.mid" />
+    <EmbeddedResource Include="songs/Grieg__Peer_Gynt_Morning.mid" />
+    <EmbeddedResource Include="songs/Handel__Sarabande_in_D_minor.mid" />
+    <EmbeddedResource Include="songs/Liadov__Prelude_Op._11_in_B_minor.mid" />
+    <EmbeddedResource Include="songs/MacDowelll__To_a_Wild_Rose.mid" />
+    <EmbeddedResource Include="songs/Massenet__Elegy_in_E_minor.mid" />
+    <EmbeddedResource Include="songs/Mendelssohn__Venetian_Boat_Song_Op._19b_No._6.mid" />
+    <EmbeddedResource Include="songs/Mendelssohn__Wedding_March.mid" />
+    <EmbeddedResource Include="songs/Mozart__Aria_from_Don_Giovanni.mid" />
+    <EmbeddedResource Include="songs/Mozart__Eine_Kleine_Nachtmusik.mid" />
+    <EmbeddedResource Include="songs/Mozart__Fantasy_No._3_in_D_minor.mid" />
+    <EmbeddedResource Include="songs/Mozart__Minuet_from_Don_Juan.mid" />
+    <EmbeddedResource Include="songs/Mozart__Rondo_Alla_Turca.mid" />
+    <EmbeddedResource Include="songs/Mozart__Sonata_K.545_in_C_major.mid" />
+    <EmbeddedResource Include="songs/Offenbach__Barcarolle_from_The_Tales_of_Hoffmann.mid" />
+    <EmbeddedResource Include="songs/Pachelbel__Canon_in_D_major.mid" />
+    <EmbeddedResource Include="songs/Prokofiev__Peter_and_the_Wolf.mid" />
+    <EmbeddedResource Include="songs/Puccini__O_Mio_Babbino_Caro.mid" />
+    <EmbeddedResource Include="songs/Rebikov__Valse_Melancolique_Op._2_No._3.mid" />
+    <EmbeddedResource Include="songs/Saint-Saens__The_Swan.mid" />
+    <EmbeddedResource Include="songs/Satie__Gnossienne_No._1.mid" />
+    <EmbeddedResource Include="songs/Satie__Gymnopedie_No._1.mid" />
+    <EmbeddedResource Include="songs/Schubert__Impromptu_Op._90_No._4_in_A-flat_major.mid" />
+    <EmbeddedResource Include="songs/Schubert__Moment_Musicaux_No._1_in_C_major.mid" />
+    <EmbeddedResource Include="songs/Schubert__Moment_Musicaux_No._3_in_F_minor.mid" />
+    <EmbeddedResource Include="songs/Schubert__Serenade_in_D_minor.mid" />
+    <EmbeddedResource Include="songs/Schumann__Scenes_From_Childhood_Op._15_No._12.mid" />
+    <EmbeddedResource Include="songs/Schumann__The_Happy_Farmer.mid" />
+    <EmbeddedResource Include="songs/Strauss__The_Blue_Danube_Waltz.mid" />
+    <EmbeddedResource Include="songs/Tchaikovsky__Album_for_the_Young_-_Old_French_Song.mid" />
+    <EmbeddedResource Include="songs/Tchaikovsky__Album_for_the_Young_-_Polka.mid" />
+    <EmbeddedResource Include="songs/Tchaikovsky__Album_for_the_Young_-_Waltz.mid" />
+    <EmbeddedResource Include="songs/Tchaikovsky__Nutcracker_-_Dance_of_the_Reed_Flutes.mid" />
+    <EmbeddedResource Include="songs/Tchaikovsky__Nutcracker_-_Dance_of_the_Sugar_Plum_Fairies.mid" />
+    <EmbeddedResource Include="songs/Tchaikovsky__Nutcracker_-_March_of_the_Toy_Soldiers.mid" />
+    <EmbeddedResource Include="songs/Tchaikovsky__Nutcracker_-_Waltz_of_the_Flowers.mid" />
+    <EmbeddedResource Include="songs/Tchaikovsky__Swan_Lake.mid" />
+    <EmbeddedResource Include="songs/Verdi__La_Donna_e_Mobile.mid" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

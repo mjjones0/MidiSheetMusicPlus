@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4617E422-CE13-41B9-A542-5DAF12203E08}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MidiSheetMusic</RootNamespace>
+    <AssemblyName>SheetMusic</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccidSymbol.cs" />
+    <Compile Include="BarSymbol.cs" />
+    <Compile Include="BlankSymbol.cs" />
+    <Compile Include="ChordSymbol.cs" />
+    <Compile Include="ClefMeasures.cs" />
+    <Compile Include="ClefSymbol.cs" />
+    <Compile Include="ConfigINI.cs" />
+    <Compile Include="KeySignature.cs" />
+    <Compile Include="LyricSymbol.cs" />
+    <Compile Include="MidiEvent.cs" />
+    <Compile Include="MidiFile.cs" />
+    <Compile Include="MidiFileException.cs" />
+    <Compile Include="MidiFileReader.cs" />
+    <Compile Include="MidiNote.cs" />
+    <Compile Include="MidiOptions.cs" />
+    <Compile Include="MidiTrack.cs" />
+    <Compile Include="MusicSymbol.cs" />
+    <Compile Include="RestSymbol.cs" />
+    <Compile Include="SheetMusic.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Staff.cs" />
+    <Compile Include="Stem.cs" />
+    <Compile Include="SymbolWidths.cs" />
+    <Compile Include="TimeSignature.cs" />
+    <Compile Include="TimeSigSymbol.cs" />
+    <Compile Include="WhiteNote.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="bass.png" />
+    <EmbeddedResource Include="eight.png" />
+    <EmbeddedResource Include="four.png" />
+    <EmbeddedResource Include="nine.png" />
+    <EmbeddedResource Include="NotePair.png" />
+    <EmbeddedResource Include="six.png" />
+    <EmbeddedResource Include="three.png" />
+    <EmbeddedResource Include="treble.png" />
+    <EmbeddedResource Include="twelve.png" />
+    <EmbeddedResource Include="two.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
