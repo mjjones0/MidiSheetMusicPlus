@@ -232,6 +232,10 @@ public class Volume {
         }
     }
 
+    public static void SetVolumeWindowsSeven(int value) {
+        
+    }
+
     public static void SetVolume(int value) {
         if (Type.GetType("Mono.Runtime") != null) {
             SetVolumeLinux(value);
@@ -239,7 +243,11 @@ public class Volume {
         else if (Environment.OSVersion.Version.Major == 5) {
             SetVolumeWindowsXP(value);
         }
-        else {
+        else if (Environment.OSVersion.Version.Major == 6) {
+            SetVolumeWindowsSeven(value);
+        }
+        else
+        {
             SetVolumeWindowsVista(value);
         }
     }

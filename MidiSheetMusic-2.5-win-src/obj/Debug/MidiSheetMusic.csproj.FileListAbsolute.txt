@@ -5,3 +5,4 @@ C:\Users\mjjones\Downloads\MidiSheetMusic-2.5-win-src\MidiSheetMusic-2.5-win-src
 C:\Users\mjjones\Downloads\MidiSheetMusic-2.5-win-src\MidiSheetMusic-2.5-win-src\obj\Debug\MidiSheetMusic.pdb
 C:\Users\mjjones\Documents\GitHub\MidiSheetMusicPlus\MidiSheetMusic-2.5-win-src\obj\Debug\MidiSheetMusic.exe
 C:\Users\mjjones\Documents\GitHub\MidiSheetMusicPlus\MidiSheetMusic-2.5-win-src\obj\Debug\MidiSheetMusic.pdb
+C:\Users\mjjones\Documents\GitHub\MidiSheetMusicPlus\MidiSheetMusic-2.5-win-src\obj\Debug\MidiSheetMusic.csprojResolveAssemblyReference.cache
