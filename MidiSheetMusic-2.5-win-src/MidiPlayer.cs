@@ -85,11 +85,14 @@ public class MidiPlayer : Panel  {
     StringBuilder errormsg;     /** Error messages from midi player */
     Process timidity;           /** The Linux timidity process */
 
+    //mciSendString 
     [DllImport("winmm.dll")]
-    public static extern int mciSendString(string lpstrCommand,
-                                           string lpstrReturnString,
-                                           int uReturnLength,
-                                           int dwCallback);
+    private static extern long mciSendString(
+        string command,
+        StringBuilder returnValue,
+        int returnLength,
+        IntPtr winHandle);
+
     [DllImport("winmm.dll")]
     public static extern int mciGetErrorString(int errcode, 
                                                StringBuilder msg, uint buflen);
@@ -178,8 +181,6 @@ public class MidiPlayer : Panel  {
         fastFwdButton.Click += new EventHandler(FastForward);
         tip = new ToolTip();
         tip.SetToolTip(fastFwdButton, "Fast Forward");
-
-
 
         /* Create the Speed bar */
         speedLabel = new Label();
@@ -330,12 +331,12 @@ public class MidiPlayer : Panel  {
     /** 
      *  Return whether the song is muted the option settings.
      */
-    private bool isMuted() {
+    private bool allTracksMuted() {
         for (int i = 0; i < options.mute.Length; i++) {
-            if (options.mute[i])
-                return true;
+            if (!options.mute[i])
+                return false;
         }
-        return false;
+        return true;
     }
 
     /** Create a new midi file with all the MidiOptions incorporated.
@@ -397,9 +398,9 @@ public class MidiPlayer : Panel  {
      */
     private void PlaySoundWindows(string filename) {
         string cmd = "open \"sequencer!" + filename + "\" alias midisheet";
-        int ret = mciSendString(cmd, "", 0, 0);
+        long ret = mciSendString(cmd, null, 0, IntPtr.Zero);
         // mciGetErrorString(ret, errormsg, 256);
-        ret = mciSendString("play midisheet", "", 0, 0);
+        ret = mciSendString("play midisheet", null, 0, IntPtr.Zero);
         // mciGetErrorString(ret, errormsg, 256);
     }
 
@@ -413,9 +414,9 @@ public class MidiPlayer : Panel  {
 
     /** Stop playing the music on Windows */
     private void StopSoundWindows() {
-        int ret = mciSendString("stop midisheet", "", 0, 0);
+        long ret = mciSendString("stop midisheet", null, 0, IntPtr.Zero);
         // mciGetErrorString(ret, errormsg, 256);
-        ret = mciSendString("close midisheet", "", 0, 0);
+        ret = mciSendString("close midisheet", null, 0, IntPtr.Zero);
         // mciGetErrorString(ret, errormsg, 256);
     }
 
@@ -469,41 +470,58 @@ public class MidiPlayer : Panel  {
         if (midifile == null || sheet == null || numberTracks() == 0) {
             return;
         }
-        else if (playstate == initStop || playstate == initPause) {
+        else if (allTracksMuted()) {
+            string msg = "All tracks are muted.\n" + 
+                         "You must unmute at least one track in order to play this song!\n" + 
+                         "Go to 'Tracks->Select Tracks To Mute' to change the settings.\n";
+
+            MessageBox.Show (msg, "Error", 
+                             MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
             return;
         }
-        else if (playstate == playing) {
+        else if (playstate == initStop || playstate == initPause)
+        {
+            return;
+        }
+        else if (playstate == playing)
+        {
             playstate = initPause;
             return;
         }
-        else if (playstate == stopped || playstate == paused) {
+        else if (playstate == stopped || playstate == paused)
+        {
             /* The startPulseTime is the pulse time of the midi file when
              * we first start playing the music.  It's used during shading.
              */
-            if (options.playMeasuresInLoop) {
+            if (options.playMeasuresInLoop)
+            {
                 /* If we're playing measures in a loop, make sure the
                  * currentPulseTime is somewhere inside the loop measures.
                  */
                 int measure = (int)(currentPulseTime / midifile.Time.Measure);
                 if ((measure < options.playMeasuresInLoopStart) ||
-                    (measure > options.playMeasuresInLoopEnd)) {
+                    (measure > options.playMeasuresInLoopEnd))
+                {
                     currentPulseTime = options.playMeasuresInLoopStart * midifile.Time.Measure;
                 }
                 startPulseTime = currentPulseTime;
                 options.pauseTime = (int)(currentPulseTime - options.shifttime);
             }
-            else if (playstate == paused) {
+            else if (playstate == paused)
+            {
                 startPulseTime = currentPulseTime;
                 options.pauseTime = (int)(currentPulseTime - options.shifttime);
             }
-            else {
+            else
+            {
                 options.pauseTime = 0;
                 startPulseTime = options.shifttime;
                 currentPulseTime = options.shifttime;
                 prevPulseTime = options.shifttime - midifile.Time.Quarter;
             }
 
-            if (Type.GetType("Mono.Runtime") != null) {
+            if (Type.GetType("Mono.Runtime") != null)
+            {
                 SkipLeadingSilence();
             }
 
@@ -512,7 +530,7 @@ public class MidiPlayer : Panel  {
             Volume.SetVolume(volumeBar.Value);
             PlaySound(tempSoundFile);
             startTime = DateTime.Now.TimeOfDay;
-            timer.Start(); 
+            timer.Start();
             playButton.Image = pauseImage;
             playTip.SetToolTip(playButton, "Pause");
             sheet.ShadeNotes((int)currentPulseTime, (int)prevPulseTime, true);
