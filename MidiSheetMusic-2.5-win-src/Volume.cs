@@ -111,6 +111,12 @@ public class Volume {
     [DllImport("ole32.dll")]
     private static extern int CoInitialize(object arg);
 
+    [DllImport("winmm.dll", EntryPoint = "waveOutSetVolume")]
+    public static extern int WaveOutSetVolume(IntPtr hwo, uint dwVolume);
+
+    [DllImport("winmm.dll", SetLastError = true)]
+    public static extern bool PlaySound(string pszSound, IntPtr hmod, uint fdwSound);
+
 
     /* Set the Volume on Windows Vista by obtaining an
      * IAudioEndpointVolume COM object. 
@@ -232,8 +238,21 @@ public class Volume {
         }
     }
 
+    /*
+     * Sets the application volume for windows 7.
+     */
     public static void SetVolumeWindowsSeven(int value) {
-        
+        // convert to ratio
+        double volRatio = (double)value / 100.0;
+
+        // convert volume ratio to a number between 0000 and FFFF
+        int volResult = (int)(volRatio * (double)0x0000FFFF);
+
+        // set a value representing value % of volume in both left and right channels
+        uint volumeBothChannels = ((uint)volResult | ((uint)volResult << 16));
+
+        // set application volume
+        WaveOutSetVolume(IntPtr.Zero, volumeBothChannels);
     }
 
     public static void SetVolume(int value) {
