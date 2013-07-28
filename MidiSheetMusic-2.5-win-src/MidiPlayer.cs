@@ -90,11 +90,9 @@ public class MidiPlayer : Panel  {
                                            string lpstrReturnString,
                                            int uReturnLength,
                                            int dwCallback);
-
     [DllImport("winmm.dll")]
     public static extern int mciGetErrorString(int errcode, 
                                                StringBuilder msg, uint buflen);
-
 
     /** Load the play/pause/stop button images */
     private void loadButtonImages() {
@@ -322,18 +320,30 @@ public class MidiPlayer : Panel  {
     private int numberTracks() {
         int count = 0;
         for (int i = 0; i < options.tracks.Length; i++) {
-            if (options.tracks[i] && !options.mute[i]) {
+            if (options.tracks[i]) {
                 count += 1;
             }
         }
         return count;
     }
 
+    /** 
+     *  Return whether the song is muted the option settings.
+     */
+    private bool isMuted() {
+        for (int i = 0; i < options.mute.Length; i++) {
+            if (options.mute[i])
+                return true;
+        }
+        return false;
+    }
+
     /** Create a new midi file with all the MidiOptions incorporated.
      *  Save the new file to TEMP/<originalfile>.MSM.mid, and store
      *  this temporary filename in tempSoundFile.
-     */ 
-    private void CreateMidiFile() {
+     */
+    private void CreateMidiFile()
+    {
         double inverse_tempo = 1.0 / midifile.Time.Tempo;
         double inverse_tempo_scaled = inverse_tempo * speedBar.Value / 100.0;
         options.tempo = (int)(1.0 / inverse_tempo_scaled);
@@ -352,7 +362,6 @@ public class MidiPlayer : Panel  {
             tempSoundFile = ""; 
         }
     }
-
 
     /** Play the sound for the given MIDI file */
     private void PlaySound(string filename) {
@@ -418,7 +427,6 @@ public class MidiPlayer : Panel  {
             timidity = null;
         }
     }
-
 
     /** The Linux Timidity MIDI player skips leading silence, and starts
      * playing the first note immediately.  We have to deal with this
@@ -603,7 +611,6 @@ public class MidiPlayer : Panel  {
         piano.ShadeNotes((int)currentPulseTime, (int)prevPulseTime);
     }
 
-
     /** Move the current position to the location clicked.
      *  The music must be in the paused/stopped state.
      *  When we resume in playPause, we start at the currentPulseTime.
@@ -630,7 +637,6 @@ public class MidiPlayer : Panel  {
         sheet.ShadeNotes((int)currentPulseTime, (int)prevPulseTime, false);
         piano.ShadeNotes((int)currentPulseTime, (int)prevPulseTime);
     }
-
 
     /** The callback for the timer. If the midi is still playing, 
      *  update the currentPulseTime and shade the sheet music.  
