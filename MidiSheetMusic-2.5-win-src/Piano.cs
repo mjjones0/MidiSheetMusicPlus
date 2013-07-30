@@ -549,6 +549,16 @@ public class Piano : Control {
         graphics.TranslateTransform(-(margin + BlackBorder), -(margin + BlackBorder));
         graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
     }
+
+
+
+
+    /** Gets total width of piano for GUI purposes **/
+    public int getPianoWidth()
+    {
+        return WhiteKeyWidth * KeysPerOctave * MaxOctave + 3 * BlackBorder;
+    }
+
 }
 
 }

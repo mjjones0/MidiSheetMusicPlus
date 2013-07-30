@@ -225,9 +225,13 @@ public class SheetMusicWindow : Form {
 
         piano = new Piano();
         piano.Parent = this;
-        // piano.BackColor = Color.LightGray;
-        piano.Location = new Point(piano.Location.X, piano.Location.Y + player.Height);
+        piano.BackColor = Color.LightGray;
+
+        int pianoLeftSpace = (this.Width - piano.getPianoWidth()) / 2;
+        piano.Location = new Point(pianoLeftSpace, piano.Location.Y + player.Height);
+        //piano.Location = new Point(piano.Location.X, piano.Location.Y + player.Height);
         player.SetPiano(piano);
+
  
         scrollView = new Panel();
         scrollView.Parent = this;
@@ -237,6 +241,7 @@ public class SheetMusicWindow : Form {
         scrollView.AutoScroll = true;
         scrollView.HorizontalScroll.Enabled = true;
         scrollView.VerticalScroll.Enabled = true;
+
 
         selectMidi = new Label();
         selectMidi.Font = new Font("Arial", 16, FontStyle.Bold);
@@ -258,6 +263,13 @@ public class SheetMusicWindow : Form {
         base.OnResize(e);
         if (piano != null) {
             piano.Size = new Size(player.Width, piano.Size.Height);
+
+            int pianoLeftSpace = (this.Width - piano.getPianoWidth()) / 2;
+            if (pianoLeftSpace < 0) pianoLeftSpace = 0;
+            piano.Location = new Point(pianoLeftSpace, piano.Location.Y);
+            player.SetPiano(piano);
+            
+
         }
         if (scrollView != null) {
             scrollView.Size = new Size(player.Width, ClientSize.Height - (player.Height + piano.Height));
