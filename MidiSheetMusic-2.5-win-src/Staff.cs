@@ -164,7 +164,6 @@ public class Staff {
         }
     }
 
-
     /** Calculate the start and end time of this staff. */
     private void CalculateStartEndTime() {
         starttime = endtime = 0;
@@ -184,7 +183,6 @@ public class Staff {
             }
         }
     }
-
 
     /** Full-Justify the symbols, so that they expand to fill the whole staff. */
     private void FullJustify() {
@@ -221,7 +219,6 @@ public class Staff {
         }
     }
 
-
     /** Add the lyric symbols that occur within this staff.
      *  Set the x-position of the lyric symbol. 
      */
@@ -256,7 +253,6 @@ public class Staff {
             lyrics = null;
         }
     }
-
 
     /** Draw the lyrics */
     private void DrawLyrics(Graphics g, Pen pen) {
@@ -293,7 +289,6 @@ public class Staff {
     }
 
     /** Draw the lyrics */
-
 
     /** Draw the five horizontal lines of the staff */
     private void DrawHorizLines(Graphics g, Pen pen) {
@@ -335,7 +330,6 @@ public class Staff {
                         SheetMusic.LeftMargin, yend);
 
         g.DrawLine(pen, width-1, ystart, width-1, yend);
-
     }
 
     /** Draw this staff. Only draw the symbols inside the clip area */
@@ -379,9 +373,7 @@ public class Staff {
         if (lyrics != null) {
             DrawLyrics(g, pen);
         }
-
     }
-
 
     /** Shade all the chords played in the given time.
      *  Un-shade any chords shaded in the previous pulse time.
@@ -538,7 +530,6 @@ public class Staff {
         result += "End Staff\n";
         return result;
     }
-
 }
 
 }

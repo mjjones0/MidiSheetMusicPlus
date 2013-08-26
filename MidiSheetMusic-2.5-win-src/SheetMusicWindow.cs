@@ -20,7 +20,6 @@ using System.Resources;
 
 namespace MidiSheetMusic {
 
-
 /** @class SheetMusicWindow
  *
  * The SheetMusicWindow is the main window/form of the application,
@@ -188,6 +187,12 @@ public class SheetMusicWindow : Form {
     MenuItem useColorMenu;
     MenuItem chooseColorMenu;
     MenuItem chooseInstrumentsMenu;
+    MenuItem measureWidthMenu;
+
+    enum FixedMeasureWidth : int
+    {
+        Fixed600 = 600
+    };
 
     /** Create a new instance of this Form.
      * This window has three child controls:
@@ -209,10 +214,14 @@ public class SheetMusicWindow : Form {
         DisableMenus();
         AutoScroll = false;
 
-        if (System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width >= 1200) {
+        if (System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width >= 1600) {
+            zoom = 2.0f;
+        }
+        else if (System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width >= 1200) {
             zoom = 1.5f;
         }
-        else {
+        else
+        {
             zoom = 1.0f;
         }
 
@@ -225,13 +234,11 @@ public class SheetMusicWindow : Form {
 
         piano = new Piano();
         piano.Parent = this;
-        piano.BackColor = Color.LightGray;
+        piano.BackColor = Color.Gray;
 
-        int pianoLeftSpace = (this.Width - piano.getPianoWidth()) / 2;
-        piano.Location = new Point(pianoLeftSpace, piano.Location.Y + player.Height);
-        //piano.Location = new Point(piano.Location.X, piano.Location.Y + player.Height);
+        piano.Location = new Point((this.Width - piano.getPianoWidth()) / 2, 
+                                    piano.Location.Y + player.Height);
         player.SetPiano(piano);
-
  
         scrollView = new Panel();
         scrollView.Parent = this;
@@ -257,7 +264,6 @@ public class SheetMusicWindow : Form {
         // this.Width = Math.Max(this.Width, piano.Width + SheetMusic.NoteHeight*4);
     }
 
-
     /** When the window is resized, adjust the scrollView to fill the window */
     protected override void OnResize(EventArgs e) {
         base.OnResize(e);
@@ -268,8 +274,6 @@ public class SheetMusicWindow : Form {
             if (pianoLeftSpace < 0) pianoLeftSpace = 0;
             piano.Location = new Point(pianoLeftSpace, piano.Location.Y);
             player.SetPiano(piano);
-            
-
         }
         if (scrollView != null) {
             scrollView.Size = new Size(player.Width, ClientSize.Height - (player.Height + piano.Height));
@@ -544,7 +548,7 @@ public class SheetMusicWindow : Form {
         sheetmusic.SetZoom(zoom);
         sheetmusic.Parent = scrollView;
 
-        BackColor = Color.White;
+        //BackColor = Color.White;
         scrollView.BackColor = Color.White;
 
         /* Update the Midi Player and piano */
@@ -621,10 +625,12 @@ public class SheetMusicWindow : Form {
         MenuItem zoomout = new MenuItem("Zoom Out", new EventHandler(ZoomOut), Shortcut.CtrlX);
         MenuItem zoom100 = new MenuItem("Zoom to 100%", new EventHandler(Zoom100));
         MenuItem zoom150 = new MenuItem("Zoom to 150%", new EventHandler(Zoom150));
+        MenuItem zoom200 = new MenuItem("Zoom to 200%", new EventHandler(Zoom200));
         viewMenu.MenuItems.Add(zoomin);
         viewMenu.MenuItems.Add(zoomout);
         viewMenu.MenuItems.Add(zoom100);
         viewMenu.MenuItems.Add(zoom150);
+        viewMenu.MenuItems.Add(zoom200);
         viewMenu.MenuItems.Add("-");
 
         scrollVertMenu = new MenuItem("Scroll &Vertically", new EventHandler(ScrollVertically));
@@ -658,7 +664,6 @@ public class SheetMusicWindow : Form {
         colorMenu.MenuItems.Add(chooseColorMenu);
         Menu.MenuItems.Add(colorMenu);
     }
-
 
     /* Create the "Select Tracks to Display" menu. */
     void CreateTrackDisplayMenu() {
@@ -722,7 +727,6 @@ public class SheetMusicWindow : Form {
         }
     }
 
-
     /** Create the "Track" Menu after a Midi file has been selected.
      * Add a menu item to enable/disable displaying each track.
      * Add a menu item to mute/unmute each track.
@@ -767,6 +771,7 @@ public class SheetMusicWindow : Form {
         CreateTransposeMenu();
         CreateShiftNoteMenu();
         CreateMeasureLengthMenu();
+        CreateMeasureWidthMenu();
         CreateCombineNotesMenu();
         CreateShowLettersMenu();
         CreateShowLyricsMenu();
@@ -874,7 +879,6 @@ public class SheetMusicWindow : Form {
         notesMenu.MenuItems.Add(changeKeyMenu);
     }
 
-
     /** Create the "Transpose" sub-menu.
      * Create sub-menus for moving the key up or down.
      * The Menu.Tag contains the amount to shift the key by.
@@ -966,7 +970,6 @@ public class SheetMusicWindow : Form {
         notesMenu.MenuItems.Add(measureMenu);
     }
 
-
     /** Create the Time Signature Menu.
      * In addition to the default time signature, add 3/4 and 4/4
      */
@@ -1035,6 +1038,22 @@ public class SheetMusicWindow : Form {
         notesMenu.MenuItems.Add(playMeasuresMenu);
     }
 
+    /** Create the "Measure Width" sub-menu. */
+    void CreateMeasureWidthMenu() {
+        MenuItem menu;
+        measureWidthMenu = new MenuItem("&Measure Width");
+        menu = new MenuItem("Variable Width Measures (default)",
+                         new EventHandler(MeasureWidth));
+        menu.RadioCheck = true;
+        menu.Checked = true;
+        menu.Tag = null;
+        measureWidthMenu.MenuItems.Add(menu);
+        measureWidthMenu.MenuItems.Add("-");
+
+        /** different options for fixed measure widths */
+
+        notesMenu.MenuItems.Add(measureWidthMenu);
+    }
 
     /** Create the Help menu */
     void CreateHelpMenu() {
@@ -1057,7 +1076,6 @@ public class SheetMusicWindow : Form {
         toPage = 0;
         currentpage = 1;
     }
-
 
     /** The callback function for the "Open..." menu.
      * Display a "File Open" dialog, to select a midi filename.
@@ -1243,7 +1261,6 @@ public class SheetMusicWindow : Form {
         }
     }
 
-
     /** The callback function for the "Save As PDF" menu.
      * When invoked this will save the sheet music as a PDF document,
      * with one image per page.  For each page in the sheet music:
@@ -1328,8 +1345,6 @@ public class SheetMusicWindow : Form {
         }
     }
 
-
-
     /** The callback function for the "Print Preview" menu.
      * When invoked, this will spawn a PrintPreview dialog.
      * The dialog will then invoke the PrintPage() event
@@ -1411,7 +1426,6 @@ public class SheetMusicWindow : Form {
         Application.Exit();
     }
 
-
     /** The callback function for the "Track <num>" menu items.
      * Update the checked status of the menu item.
      * Also, unmute/mute the track if displayed/not-displayed.
@@ -1484,8 +1498,6 @@ public class SheetMusicWindow : Form {
        RedrawSheetMusic();
     }
 
-
-
     /** The callback function for the "One Staff per Track" menu.
      * Update the checked status of the menu items, and redraw
      * the sheet music.
@@ -1497,7 +1509,6 @@ public class SheetMusicWindow : Form {
         twoStaffMenu.Checked = false;
         RedrawSheetMusic();
     }
-
 
     /** The callback function for the "Combine/Split Into Two Staffs" menu.
      * Update the checked status of the menu item, and then
@@ -1546,6 +1557,15 @@ public class SheetMusicWindow : Form {
      */
     void Zoom150(object obj, EventArgs args) {
         zoom = 1.5f;
+        sheetmusic.SetZoom(zoom);
+    }
+
+    /** The callback function for the "Zoom to 200%" menu.
+     * Set the zoom level to 200%.
+     */
+    void Zoom200(object obj, EventArgs args)
+    {
+        zoom = 2.0f;
         sheetmusic.SetZoom(zoom);
     }
 
@@ -1613,7 +1633,6 @@ public class SheetMusicWindow : Form {
         RedrawSheetMusic();
     }
 
-
     /** The callback function for the "Key Signature" menu. */
     void ChangeKeySignature(object obj, EventArgs args) {
         MenuItem menu = (MenuItem) obj;
@@ -1639,7 +1658,6 @@ public class SheetMusicWindow : Form {
         menu.Checked = true;
         RedrawSheetMusic();
     }
-
 
     /** The callback function for the "Shift Notes" menu. */
     void ShiftTime(object obj, EventArgs args) {
@@ -1692,6 +1710,19 @@ public class SheetMusicWindow : Form {
         RedrawSheetMusic();
     }
 
+    /** The callback function for the "Measure Width" menu. */
+    void MeasureWidth(object obj, EventArgs args) {
+        MenuItem menu = (MenuItem)obj;
+        if (menu.Checked)
+            return;
+        foreach (MenuItem othermenu in measureMenu.MenuItems)
+        {
+            othermenu.Checked = false;
+        }
+        menu.Checked = true;
+        RedrawSheetMusic();
+    }
+
     /** The callback function for the "Combine Notes Within Interval" menu. */
     void CombineNotes(object obj, EventArgs args) {
         MenuItem menu = (MenuItem) obj;
@@ -1704,7 +1735,6 @@ public class SheetMusicWindow : Form {
         menu.Checked = true;
         RedrawSheetMusic();
     }
-
 
     /** The callback function for the "Use Color" menu. */
     void UseColor(object obj, EventArgs args) {
@@ -1788,7 +1818,6 @@ public class SheetMusicWindow : Form {
         dialog.Dispose();
     }
 
-
     /** Callback function for the "Help Contents" Menu.
      * Display the Help Dialog.
      */
@@ -1868,7 +1897,6 @@ public class SheetMusicWindow : Form {
         CreateNotesMenu();
 
     }
-
 
     /** Disable certain menus if there is no MidiFile selected.  For
      * the Track menu, remove any sub-menus under the Track menu.

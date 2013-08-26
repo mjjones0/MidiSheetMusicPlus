@@ -20,7 +20,6 @@ using System.Windows.Forms;
 
 namespace MidiSheetMusic {
 
-
 /** @class SheetMusic
  *
  * The SheetMusic Control is the main class for displaying the sheet music.
@@ -73,7 +72,6 @@ public class SheetMusic : Control {
     private SolidBrush shade2Brush; /** The brush for shading left-hand piano */
     private Pen pen;                /** The black pen for drawing */
 
-
     /** Initialize the default note sizes.  */
     static SheetMusic() {
         SetNoteSize(false);
@@ -101,7 +99,6 @@ public class SheetMusic : Control {
         MidiFile file = new MidiFile(data, title);
         init(file, options); 
     }
-
 
     /** Create a new SheetMusic control.
      * MidiFile is the parsed midi file to display.
@@ -184,7 +181,6 @@ public class SheetMusic : Control {
         SetZoom(1.0f);
     }
 
-
     /** Get the best key signature given the midi notes in all the tracks. */
     private KeySignature GetKeySignature(List<MidiTrack> tracks) {
         List<int> notenums = new List<int>();
@@ -195,7 +191,6 @@ public class SheetMusic : Control {
         }
         return KeySignature.Guess(notenums);
     }
-
 
     /** Create the chord symbols for a single track.
      * @param midinotes  The Midinotes in the track.
@@ -790,7 +785,6 @@ public class SheetMusic : Control {
         }
     }
 
-
     /** Set the zoom level to display at (1.0 == 100%).
      * Recalculate the SheetMusic width and height based on the
      * zoom level.  Then redraw the SheetMusic. 
@@ -859,7 +853,6 @@ public class SheetMusic : Control {
         get { return mainkey; }
     }
 
-
     /** Set the size of the notes, large or small.  Smaller notes means
      * more notes per staff.
      */
@@ -874,7 +867,6 @@ public class SheetMusic : Control {
         NoteWidth = 3 * LineSpace / 2;
         LetterFont = new Font("Arial", 8, FontStyle.Bold);
     }
-
 
     /** Draw the SheetMusic.
      * Scale the graphics by the current zoom factor.
@@ -1166,7 +1158,5 @@ public class SheetMusic : Control {
         result += "End SheetMusic\n";
         return result;
     }
-
 }
-
 }

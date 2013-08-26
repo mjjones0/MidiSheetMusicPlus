@@ -418,7 +418,6 @@ public class MidiFile {
             return "Unknown";
     }
 
-
     /** Get the list of tracks */
     public List<MidiTrack> Tracks {
         get { return tracks; }
@@ -438,7 +437,6 @@ public class MidiFile {
     public int TotalPulses {
         get { return totalpulses; }
     }
-
 
     /** Create a new MidiFile from the file. */
     public MidiFile(string filename) {
@@ -763,8 +761,7 @@ public class MidiFile {
             }
         }
         return len;
-    }
-            
+    }      
 
     /** Write the given list of Midi events to a stream/file.
      *  This method is used for sound playback, for creating new Midi files
@@ -879,7 +876,6 @@ public class MidiFile {
         }
     }
 
-
     /** Clone the list of MidiEvents */
     private static List<MidiEvent>[] CloneMidiEvents(List<MidiEvent>[] origlist) {
         List<MidiEvent>[] newlist = new List<MidiEvent>[ origlist.Length];
@@ -906,7 +902,6 @@ public class MidiFile {
         mevent.Tempo = tempo;
         return mevent;
     }
-
 
     /** Search the events for a ControlChange event with the same
      *  channel and control number.  If a matching event is found,
@@ -970,7 +965,6 @@ public class MidiFile {
         return newlist;
     }
 
-
     /** Write this Midi file to the given filename.
      * If options is not null, apply those options to the midi events
      * before performing the write.
@@ -1005,7 +999,6 @@ public class MidiFile {
         }
         return WriteEvents(stream, newevents, trackmode, quarternote);
     }
-
 
     /* Apply the following sound options to the midi events:
      * - The tempo (the microseconds per pulse)
@@ -1157,7 +1150,6 @@ public class MidiFile {
         return newevents;
     }
 
-
     /** Apply the given sheet music options to the MidiNotes.
      *  Return the midi tracks with the changes applied.
      */
@@ -1195,7 +1187,6 @@ public class MidiFile {
         return newtracks;
     }
 
-
     /** Shift the starttime of the notes by the given amount.
      * This is used by the Shift Notes menu to shift notes left/right.
      */
@@ -1222,7 +1213,6 @@ public class MidiFile {
             }
         }
     }
-
    
     /* Find the highest and lowest notes that overlap this interval (starttime to endtime).
      * This method is used by SplitTrack to determine which staff (top or bottom) a note
@@ -1281,8 +1271,6 @@ public class MidiFile {
             i++;
         }
     }
-
-
  
     /* Split the given MidiTrack into two tracks, top and bottom.
      * The highest notes will go into top, the lowest into bottom.
@@ -1389,7 +1377,6 @@ public class MidiFile {
         return result;
     }
 
-
     /** Combine the notes in the given tracks into a single MidiTrack. 
      *  The individual tracks are already sorted.  To merge them, we
      *  use a mergesort-like algorithm.
@@ -1462,7 +1449,6 @@ public class MidiFile {
         return result;
     }
 
-
     /** Combine the notes in all the tracks given into two MidiTracks,
      * and return them.
      * 
@@ -1490,7 +1476,6 @@ public class MidiFile {
         return result;
     }
 
-
     /** Check that the MidiNote start times are in increasing order.
      * This is for debugging purposes.
      */
@@ -1505,7 +1490,6 @@ public class MidiFile {
             }
         }
     }
-
 
     /** In Midi Files, time is measured in pulses.  Notes that have
      * pulse times that are close together (like within 10 pulses)
@@ -1563,7 +1547,6 @@ public class MidiFile {
             track.Notes.Sort(track.Notes[0]);
         }
     }
-
 
     /** We want note durations to span up to the next note in general.
      * The sheet music looks nicer that way.  In contrast, sheet music
@@ -1660,7 +1643,6 @@ public class MidiFile {
         }
         return result;
     }
-
 
     /** Guess the measure length.  We assume that the measure
      * length must be between 0.5 seconds and 4 seconds.
@@ -1761,7 +1743,6 @@ public class MidiFile {
         MidiFile f = new MidiFile(arg[0]);
         Console.Write(f.ToString());
     }
-
 }  /* End class MidiFile */
 
 
